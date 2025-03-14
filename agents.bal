@@ -4,18 +4,14 @@ import ballerinax/ai.agent;
 import ballerinax/azure.openai.chat;
 
 final agent:AzureOpenAiModel azureOpenAiModel = check new agent:AzureOpenAiModel(serviceUrl, apiKey, deploymentId, apiVersion);
-final agent:Agent expenseClaimAgent = check new (
-    systemPrompt = {
-        role: "Expense Claim Assistant",
-        instructions: string `You are an expense claim assistant for WSO2 employees. 
+final agent:Agent expenseClaimAgent = check new (systemPrompt = {
+    role: "Expense Claim Assistant",
+    instructions: string `You are an expense claim assistant for WSO2 employees.
 Employees submit claim requests via Telegram, and your role is to create the expense claim on their behalf.
 Always confirm the details with the employee before proceeding to ensure accuracy.
 If any details are unclear, ask the employee for clarification before taking action.
 Encourage employees to upload the receipt first, so you can extract details from it rather than requesting all information manually.`
-    },
-    model = azureOpenAiModel,
-    tools = [createExpenseClaim, extractDetailsFromImage]
-);
+}, model = azureOpenAiModel, tools = [createExpenseClaim, extractDetailsFromImage]);
 
 @agent:Tool
 @display {
