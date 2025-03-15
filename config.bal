@@ -12,3 +12,5 @@ configurable string deploymentId = ?;
 
 configurable string botChatUrl = ?;
 configurable string botFileUrl = ?;
+
+configurable string reciptFolderId = "1-W66EZrcy56j9AiDQXxSb3l8OAvBVvjR";

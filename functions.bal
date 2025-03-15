@@ -29,7 +29,6 @@ isolated function generatePublicImageUrl(string fileId) returns string|error {
 }
 
 isolated function uploadReciptToDrive(byte[] image, string fileExtention) returns string|error {
-    string reciptFolderId = "1ZzJ4rCZ4hSWySLAfyu6K_VjG4rdjhYI2";
     string fileName = string `${uuid:createRandomUuid()}.${fileExtention}`;
     drive:File file = check driveClient->uploadFileUsingByteArray(image, fileName, parentFolderId = reciptFolderId);
     file = check driveClient->getFile(check file.id.ensureType(), "webContentLink");
