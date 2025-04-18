@@ -1,10 +1,10 @@
 import ballerina/http;
 import ballerina/lang.regexp;
-import ballerinax/ai.agent;
+import ballerinax/ai;
 import ballerinax/azure.openai.chat;
 
-final agent:AzureOpenAiModel azureOpenAiModel = check new agent:AzureOpenAiModel(serviceUrl, apiKey, deploymentId, apiVersion);
-final agent:Agent expenseClaimAgent = check new (systemPrompt = {
+final ai:AzureOpenAiProvider azureOpenAiModel = check new ai:AzureOpenAiProvider(serviceUrl, apiKey, deploymentId, apiVersion);
+final ai:Agent expenseClaimAgent = check new (systemPrompt = {
     role: "Expense Claim Assistant",
     instructions: string `You are an expense claim assistant for WSO2 employees.
 Employees submit claim requests via Telegram, and your role is to create the expense claim on their behalf.
@@ -13,7 +13,7 @@ If any details are unclear, ask the employee for clarification before taking act
 Encourage employees to upload the receipt first, so you can extract details from it rather than requesting all information manually.`
 }, model = azureOpenAiModel, tools = [createExpenseClaim, extractDetailsFromImage]);
 
-@agent:Tool
+@ai:AgentTool
 @display {
     label: "Create Expense Claim",
     iconPath: "path/to/icon"
@@ -26,7 +26,7 @@ isolated function createExpenseClaim(ExpenseClaimRequest claim) returns ExpenseC
 # Given an image URL, process the image to extract necessary values for an expense claim.  
 # + imageUrl - URL of the image to be processed.  
 # + return - JSON response on success; otherwise, an error.  
-@agent:Tool
+@ai:AgentTool
 @display {
     label: "Extract Details From Image",
     iconPath: "path/to/icon"
